@@ -34,7 +34,7 @@ InputDecoration textFieldInputDecoration({hintText, isPassword = false}) {
   );
 }
 
-buttonWidget(text, function,{width=300.0}) {
+buttonWidget(text, function, {width = 300.0}) {
   return Container(
       width: width,
       decoration: BoxDecoration(
@@ -51,13 +51,12 @@ buttonWidget(text, function,{width=300.0}) {
       ));
 }
 
-appBarWidget({action}) {
+appBarWidget() {
   return AppBar(
     centerTitle: true,
     title: const Text(
       'BMI Analyzer',
     ),
-    actions: action,
   );
 }
 
@@ -144,20 +143,120 @@ oldStatusItemWidget() {
           color: Colors.blue, borderRadius: BorderRadius.circular(5.r)),
       children: [
         TableRow(children: [
-          Container(
+          SizedBox(
             height: 50.h,
-            child: Center(child: Center(child: Text('20/1/2020'))),
+            child: const Center(child: Center(child: Text('20/1/2020'))),
           ),
-          Container(height: 50.h, child: Center(child: Text('60 Kg')))
+          SizedBox(height: 50.h, child: const Center(child: Text('60 Kg')))
         ]),
         TableRow(children: [
-          Container(
+          SizedBox(
             height: 50.h,
-            child: Center(child: Text('Normal')),
+            child: const Center(child: Text('Normal')),
           ),
-          Container(height: 50.h, child: Center(child: Text('170 Cm')))
+          SizedBox(height: 50.h, child: const Center(child: Text('170 Cm')))
         ])
       ],
     ),
   );
+}
+
+foodListItem() {
+  return SizedBox(
+    height: 80.h,
+    child: Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Container(
+            child: Center(
+              child: Text('Picture'),
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.blue),
+              color: Colors.transparent,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 3,
+          child: Container(
+            padding: EdgeInsets.only(left: 10.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Expanded(
+                        child: Text(
+                      'Salamon',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                    )),
+                    Expanded(
+                        child: Text('Fish',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15,
+                                color: Colors.grey))),
+                    Expanded(
+                        child: Text('22 cal/g',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15,
+                                color: Colors.grey)))
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(right: 10.w, top: 10.h),
+                      width: 80.w,
+                      height: 40.h,
+                      child: buttonWidget('Edit', () {}),
+                    ),
+                    Container(
+                      height: 20.h,
+                      width: 30.w,
+                      decoration: const BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(5),
+                          topLeft: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                        ),
+                      ),
+                      child: const Center(
+                          child: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 16,
+                      )),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.blue),
+              color: Colors.transparent,
+            ),
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+detailsInputDecorationWidget() {
+  return InputDecoration(
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(0),
+          borderSide: const BorderSide(color: Colors.blue)),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(0),
+          borderSide: const BorderSide(color: Colors.blue)));
 }

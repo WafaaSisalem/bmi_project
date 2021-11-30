@@ -1,4 +1,3 @@
-
 import 'package:bmi_calculator_project/helpers/shared_preference_helper.dart';
 import 'package:bmi_calculator_project/models/user_model.dart';
 import 'package:bmi_calculator_project/ui/widgets/widgets.dart';
@@ -25,12 +24,12 @@ class AuthHelper {
     }
   }
 
-  Future signUpWithEmailAndPassword(email, password, userName) async {
+  signUpWithEmailAndPassword(email, password, userName) async {
     try {
-      await firebaseAuth.createUserWithEmailAndPassword(
+      return await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       // User user = userCredential.user;
-      return UserModel(email: email, userName: userName);
+      // return UserModel(email: email, userName: userName);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         showCustomDialog('You enterd a too weak password please change it');

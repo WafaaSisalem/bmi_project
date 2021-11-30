@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   navigateToHomeScreen() async {
     await Future.delayed(
-        Duration(
+        const Duration(
           seconds: 2,
         ),
         () {});

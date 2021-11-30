@@ -119,7 +119,6 @@ class SignUpPage extends StatelessWidget {
                       password: passwordController.text,
                       userName: userNameController.text,
                     ));
-                   
                   }
                 }),
                 SizedBox(

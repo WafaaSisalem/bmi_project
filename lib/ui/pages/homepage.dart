@@ -1,6 +1,9 @@
 import 'package:bmi_calculator_project/helpers/firebase_auth_helper.dart';
 import 'package:bmi_calculator_project/helpers/shared_preference_helper.dart';
 import 'package:bmi_calculator_project/router/app_router.dart';
+import 'package:bmi_calculator_project/ui/pages/add_food_details_page.dart';
+import 'package:bmi_calculator_project/ui/pages/add_record_page.dart';
+import 'package:bmi_calculator_project/ui/pages/food_list_page.dart';
 import 'package:bmi_calculator_project/ui/pages/regestration%20pages/signin_page.dart';
 import 'package:bmi_calculator_project/ui/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +13,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBarWidget(
-          // action: [
-          //   IconButton(
-          //       onPressed: () {
-          //         AuthHelper.authHelper.signOut();
-          //         AppRouter.router.pushWithReplacementFunction(LoginPage());
-          //       },
-          //       icon: const Icon(Icons.exit_to_app))
-          // ],
-        ),
+        appBar: appBarWidget(),
         body: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +52,7 @@ class HomePage extends StatelessWidget {
                   height: 10.h,
                 ),
                 Container(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   width: double.infinity,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.blue),
@@ -80,7 +74,8 @@ class HomePage extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: 300,
-                  padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
                   decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(5.r)),
@@ -100,29 +95,38 @@ class HomePage extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Expanded(child: buttonWidget('Add Food', () {})),
+                    Expanded(
+                        child: buttonWidget('Add Food', () {
+                      AppRouter.router.pushFunction(AddFoodDetailsPage());
+                    })),
                     SizedBox(
                       width: 10.w,
                     ),
                     Expanded(
                         child: buttonWidget(
                       'Add Record',
-                      () {},
+                      () {
+                        AppRouter.router.pushFunction(AddRecord());
+                      },
                     )),
                   ],
                 ),
                 SizedBox(
                   height: 20.h,
                 ),
-                buttonWidget('View Food', () {},width: double.infinity),
-                SizedBox(height: 20.h,),
+                buttonWidget('View Food', () {
+                  AppRouter.router.pushFunction(FoodListPage());
+                }, width: double.infinity),
+                SizedBox(
+                  height: 20.h,
+                ),
                 Center(
                   child: GestureDetector(
                     onTap: () {
-                  AuthHelper.authHelper.signOut();
-                  AppRouter.router.pushWithReplacementFunction(LoginPage());
-                },
-                    child:const Text(
+                      AuthHelper.authHelper.signOut();
+                      AppRouter.router.pushWithReplacementFunction(LoginPage());
+                    },
+                    child: const Text(
                       'Logout',
                       style: TextStyle(decoration: TextDecoration.underline),
                     ),
