@@ -1,6 +1,10 @@
+import 'dart:math';
+
+import 'package:bmi_calculator_project/BMIMehtods/bmi_methods.dart';
 import 'package:bmi_calculator_project/helpers/firebase_auth_helper.dart';
 import 'package:bmi_calculator_project/helpers/firestore_helper.dart';
 import 'package:bmi_calculator_project/helpers/shared_preference_helper.dart';
+import 'package:bmi_calculator_project/models/record_model.dart';
 import 'package:bmi_calculator_project/models/user_model.dart';
 import 'package:bmi_calculator_project/router/app_router.dart';
 import 'package:bmi_calculator_project/ui/pages/homepage.dart';
@@ -23,6 +27,7 @@ class _CompleteInfoPageState extends State<CompleteInfoPage> {
   double weightItemCount = 0;
   static const String male = 'Male';
   static const String female = 'Female';
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController dateOfBirthController = TextEditingController();
   save() async {
@@ -33,15 +38,28 @@ class _CompleteInfoPageState extends State<CompleteInfoPage> {
           .then((value) {
         if (value != null) {
           UserModel userModel = UserModel(
-              email: widget.email,
-              userName: widget.userName,
-              gender: groupValue == 1 ? male : female,
+            email: widget.email,
+            userName: widget.userName,
+            gender: groupValue == 1 ? male : female,
+            dateOfBirth: dateOfBirthController.text,
+          );
+
+          double currentBMI = (weightItemCount /
+                  pow(lengthItemCount / 100.0, 2)) *
+              BMIMethods.getAgePercent(dateOfBirthController.text, groupValue);
+          String currentStatus = BMIMethods.getStatus(
+              BMIMethods.getCategory(currentBMI), 0.0, 0.0);
+          RecordModel recordModel = RecordModel(
               weight: weightItemCount,
               length: lengthItemCount,
-              dateOfBirth: dateOfBirthController.text);
+              currentStatus: currentStatus);
           FirestoreHelper.firestoreHelper.addUserToFirestore(userModel.toMap());
+          FirestoreHelper.firestoreHelper
+              .addRecordToTheUser(recordModel, userModel.email);
+
           SpHelper.spHelper.setUserInfo(userModel);
           SpHelper.spHelper.setUserLoggedInState(true);
+          // SpHelper.spHelper.setUserCurrentStatus(currentStatus);
           AppRouter.router.pushWithReplacementFunction(HomePage());
         }
       });
@@ -174,10 +192,12 @@ class _CompleteInfoPageState extends State<CompleteInfoPage> {
                             height: 30.h,
                           ),
                           SizedBox(
-                            height: 35.h,
+                            height: 55.h,
                             child: Form(
                               key: formKey,
                               child: TextFormField(
+                                maxLength: 4,
+                                keyboardType: TextInputType.number,
                                 controller: dateOfBirthController,
                                 validator: (value) {
                                   if (value.isEmpty) {
@@ -189,7 +209,7 @@ class _CompleteInfoPageState extends State<CompleteInfoPage> {
                                 decoration: detailsInputDecorationWidget(),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ))
                 ],

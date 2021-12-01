@@ -1,3 +1,4 @@
+import 'package:bmi_calculator_project/models/record_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreHelper {
@@ -5,20 +6,34 @@ class FirestoreHelper {
   static FirestoreHelper firestoreHelper = FirestoreHelper._();
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   static const String userCollectionName = 'users';
+  static const String recordsCollectionName = 'records';
   static const String userNameKey = 'userName';
   static const String emailKey = 'email';
   static const String genderKey = 'gender';
   static const String weightKey = 'weight';
   static const String lengthKey = 'length';
   static const String dateOfBirthKey = 'dateOfBirth';
+  static const String dateOfAddingKey = 'dateOfAdding';
+  static const String currentStatusKey = 'currentStatus';
 
   addUserToFirestore(userMap) async {
     try {
-      await firebaseFirestore.collection(userCollectionName).add(userMap);
+      await firebaseFirestore
+          .collection(userCollectionName)
+          .doc(userMap[FirestoreHelper.emailKey])
+          .set(userMap);
     } on Exception catch (e) {
       // ignore: avoid_print
       print(e.toString());
     }
+  }
+
+  addRecordToTheUser(RecordModel recordModel, userId) async {
+    firebaseFirestore
+        .collection(userCollectionName)
+        .doc(userId)
+        .collection(recordsCollectionName)
+        .add(recordModel.toMap());
   }
 
   getUserByUsername(userName) async {
@@ -28,10 +43,19 @@ class FirestoreHelper {
         .get();
   }
 
-  getUserByEmail(email) async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getUserByEmail(email) async {
     return await firebaseFirestore
         .collection(userCollectionName)
         .where(emailKey, isEqualTo: email)
+        .get();
+  }
+
+ Future<QuerySnapshot<Map<String, dynamic>>> getUserRecordsById(userId) async {
+    return await firebaseFirestore
+        .collection(userCollectionName)
+        .doc(userId)
+        .collection(recordsCollectionName)
+        .orderBy(FirestoreHelper.dateOfAddingKey)
         .get();
   }
 }

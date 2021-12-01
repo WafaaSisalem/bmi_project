@@ -112,6 +112,7 @@ class SignUpPage extends StatelessWidget {
                   height: 80.h,
                 ),
                 buttonWidget('CREATE', () {
+                
                   if (formKey.currentState.validate()) {
                     AppRouter.router
                         .pushWithReplacementFunction(CompleteInfoPage(
