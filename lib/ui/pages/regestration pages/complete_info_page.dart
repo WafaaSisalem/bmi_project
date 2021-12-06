@@ -37,26 +37,31 @@ class _CompleteInfoPageState extends State<CompleteInfoPage> {
               widget.email, widget.password, widget.userName)
           .then((value) {
         if (value != null) {
-          UserModel userModel = UserModel(
-            email: widget.email,
-            userName: widget.userName,
-            gender: groupValue == 1 ? male : female,
-            dateOfBirth: dateOfBirthController.text,
-          );
-
+          ///////////BMI Equation
           double currentBMI = (weightItemCount /
                   pow(lengthItemCount / 100.0, 2)) *
               BMIMethods.getAgePercent(dateOfBirthController.text, groupValue);
+          ////////////current status
           String currentStatus = BMIMethods.getStatus(
               BMIMethods.getCategory(currentBMI), 0.0, 0.0);
+          //////////user model
+          UserModel userModel = UserModel(
+              email: widget.email,
+              userName: widget.userName,
+              gender: groupValue == 1 ? male : female,
+              dateOfBirth: dateOfBirthController.text,
+              currentStatus: currentStatus);
+          //////////record model
           RecordModel recordModel = RecordModel(
               weight: weightItemCount,
               length: lengthItemCount,
               currentStatus: currentStatus);
+          ///////////add user to firestore 
           FirestoreHelper.firestoreHelper.addUserToFirestore(userModel.toMap());
+          //////////add record to the user
           FirestoreHelper.firestoreHelper
               .addRecordToTheUser(recordModel, userModel.email);
-
+          ///////set user info and state in shared preference
           SpHelper.spHelper.setUserInfo(userModel);
           SpHelper.spHelper.setUserLoggedInState(true);
           // SpHelper.spHelper.setUserCurrentStatus(currentStatus);

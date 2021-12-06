@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddRecord extends StatefulWidget {
+class AddRecordPage extends StatefulWidget {
   @override
-  State<AddRecord> createState() => _AddRecordState();
+  State<AddRecordPage> createState() => _AddRecordPageState();
 }
 
-class _AddRecordState extends State<AddRecord> {
+class _AddRecordPageState extends State<AddRecordPage> {
   int groupValue = 1;
   double lengthItemCount = 0;
   double weightItemCount = 0;
@@ -36,10 +36,6 @@ class _AddRecordState extends State<AddRecord> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        headText2Widget('Gender'),
-                        SizedBox(
-                          height: 40.h,
-                        ),
                         headText2Widget('Weight'),
                         SizedBox(
                           height: 40.h,
@@ -48,55 +44,17 @@ class _AddRecordState extends State<AddRecord> {
                         SizedBox(
                           height: 40.h,
                         ),
-                        headText2Widget('Date of Birth'),
+                        headText2Widget('Date'),
+                        SizedBox(
+                          height: 40.h,
+                        ),
+                        headText2Widget('Time'),
                       ],
                     )),
                 Expanded(
                     flex: 3,
                     child: Column(
                       children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 20.w,
-                              height: 20.h,
-                              child: Radio(
-                                  value: 1,
-                                  groupValue: groupValue,
-                                  onChanged: (value) {
-                                    groupValue = value;
-                                    setState(() {});
-                                  }),
-                            ),
-                            const Text(
-                              'Male',
-                              style: TextStyle(
-                                color: Colors.blue,
-                              ),
-                            ),
-                            Expanded(child: Container()),
-                            SizedBox(
-                              width: 20.w,
-                              height: 20.h,
-                              child: Radio(
-                                  value: 2,
-                                  groupValue: groupValue,
-                                  onChanged: (value) {
-                                    groupValue = value;
-                                    setState(() {});
-                                  }),
-                            ),
-                            const Text(
-                              'Female',
-                              style: TextStyle(
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 30.h,
-                        ),
                         Row(
                           children: [
                             counterIncDec(weightItemCount, (newValue) {
@@ -131,6 +89,23 @@ class _AddRecordState extends State<AddRecord> {
                               style: TextStyle(color: Colors.blue),
                             )
                           ],
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        SizedBox(
+                          height: 35.h,
+                          child: TextField(
+                            decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(0),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue)),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(0),
+                                    borderSide:
+                                        const BorderSide(color: Colors.blue))),
+                          ),
                         ),
                         SizedBox(
                           height: 30.h,

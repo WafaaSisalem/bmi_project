@@ -28,10 +28,10 @@ class FirestoreHelper {
     }
   }
 
-  addRecordToTheUser(RecordModel recordModel, userId) async {
+  addRecordToTheUser(RecordModel recordModel, userEmailAsId) async {
     firebaseFirestore
         .collection(userCollectionName)
-        .doc(userId)
+        .doc(userEmailAsId)
         .collection(recordsCollectionName)
         .add(recordModel.toMap());
   }

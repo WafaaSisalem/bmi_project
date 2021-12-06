@@ -2,6 +2,7 @@ import 'package:bmi_calculator_project/BMIMehtods/bmi_methods.dart';
 import 'package:bmi_calculator_project/helpers/firebase_auth_helper.dart';
 import 'package:bmi_calculator_project/helpers/firestore_helper.dart';
 import 'package:bmi_calculator_project/helpers/shared_preference_helper.dart';
+import 'package:bmi_calculator_project/provider/firestore_provider.dart';
 import 'package:bmi_calculator_project/router/app_router.dart';
 import 'package:bmi_calculator_project/ui/pages/add_food_details_page.dart';
 import 'package:bmi_calculator_project/ui/pages/add_record_page.dart';
@@ -11,6 +12,7 @@ import 'package:bmi_calculator_project/ui/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,18 +20,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String currentStatus = '';
   @override
-  void initState()  {
+  void initState() {
     super.initState();
-    initCurrentStatus();
-  }
-  initCurrentStatus()async{
-    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirestoreHelper
-        .firestoreHelper
-        .getUserRecordsById(SpHelper.spHelper.getUserInfo().email);
-        
-       currentStatus = querySnapshot.docs[0].data()[FirestoreHelper.currentStatusKey];
+    Provider.of<FirestoreProvider>(context, listen: false).initCurrentStatus();
   }
 
   @override
@@ -82,7 +76,10 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(5.r)),
                   child: Center(
                       child: Text(
-                    currentStatus,
+                    Provider.of<FirestoreProvider>(context).currentStatus ==
+                            null
+                        ? ''
+                        : Provider.of<FirestoreProvider>(context).currentStatus,
                     style: TextStyle(color: Colors.grey, fontSize: 20.sp),
                   )),
                 ),
@@ -101,16 +98,27 @@ class _HomePageState extends State<HomePage> {
                   decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(5.r)),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        oldStatusItemWidget(),
-                        oldStatusItemWidget(),
-                        oldStatusItemWidget(),
-                        oldStatusItemWidget(),
-                      ],
-                    ),
-                  ),
+                  child: Provider.of<FirestoreProvider>(context)
+                              .querySnapshot ==
+                          null
+                      ? const Center(child: CircularProgressIndicator())
+                      : Provider.of<FirestoreProvider>(context)
+                                  .querySnapshot
+                                  .docs
+                                  .length <
+                              2
+                          ?const Center(
+                              child: Text('There is no old status yet!',style: TextStyle(color: Colors.white,fontSize: 20),))
+                          : SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  oldStatusItemWidget(),
+                                  oldStatusItemWidget(),
+                                  oldStatusItemWidget(),
+                                  oldStatusItemWidget(),
+                                ],
+                              ),
+                            ),
                 ),
                 SizedBox(
                   height: 30.h,
@@ -128,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                         child: buttonWidget(
                       'Add Record',
                       () {
-                        AppRouter.router.pushFunction(AddRecord());
+                        AppRouter.router.pushFunction(AddRecordPage());
                       },
                     )),
                   ],
