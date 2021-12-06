@@ -42,7 +42,7 @@ class _CompleteInfoPageState extends State<CompleteInfoPage> {
                   pow(lengthItemCount / 100.0, 2)) *
               BMIMethods.getAgePercent(dateOfBirthController.text, groupValue);
           ////////////current status
-          String currentStatus = BMIMethods.getStatus(
+          String currentStatusAsString = BMIMethods.getStatus(
               BMIMethods.getCategory(currentBMI), 0.0, 0.0);
           //////////user model
           UserModel userModel = UserModel(
@@ -50,12 +50,14 @@ class _CompleteInfoPageState extends State<CompleteInfoPage> {
               userName: widget.userName,
               gender: groupValue == 1 ? male : female,
               dateOfBirth: dateOfBirthController.text,
-              currentStatus: currentStatus);
+              );
           //////////record model
           RecordModel recordModel = RecordModel(
               weight: weightItemCount,
               length: lengthItemCount,
-              currentStatus: currentStatus);
+              recordCategory: BMIMethods.getCategory(currentBMI),
+              currentStatusAsString: currentStatusAsString,
+              currentStatusAsDouble: currentBMI);
           ///////////add user to firestore 
           FirestoreHelper.firestoreHelper.addUserToFirestore(userModel.toMap());
           //////////add record to the user

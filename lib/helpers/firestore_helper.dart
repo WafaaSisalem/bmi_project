@@ -14,7 +14,11 @@ class FirestoreHelper {
   static const String lengthKey = 'length';
   static const String dateOfBirthKey = 'dateOfBirth';
   static const String dateOfAddingKey = 'dateOfAdding';
-  static const String currentStatusKey = 'currentStatus';
+  static const String currentStatusAsStringKey = 'currentStatusAsString';
+  static const String currentStatusAsDoubleKey = 'currentStatusAsDouble';
+  static const String dateFormatedKey = 'dateFormated';
+  static const String recordCategoryKey = 'recordCategory';
+
 
   addUserToFirestore(userMap) async {
     try {

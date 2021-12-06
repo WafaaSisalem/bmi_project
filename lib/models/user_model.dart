@@ -6,21 +6,18 @@ class UserModel {
   String userName;
   String gender;
   String dateOfBirth;
-  String currentStatus;
   UserModel.fromMap(Map map) {
     // id = map['id'];
     email = map[FirestoreHelper.emailKey];
     userName = map[FirestoreHelper.userNameKey];
     gender = map[FirestoreHelper.genderKey];
     dateOfBirth = map[FirestoreHelper.dateOfBirthKey];
-    currentStatus = map[FirestoreHelper.currentStatusKey];
   }
   UserModel({
     this.email,
     this.userName,
     this.gender,
     this.dateOfBirth,
-    this.currentStatus,
   });
   toMap() {
     return {
@@ -29,7 +26,6 @@ class UserModel {
       FirestoreHelper.userNameKey: userName,
       FirestoreHelper.genderKey: gender,
       FirestoreHelper.dateOfBirthKey: dateOfBirth,
-      FirestoreHelper.currentStatusKey: currentStatus,
     };
   }
 }

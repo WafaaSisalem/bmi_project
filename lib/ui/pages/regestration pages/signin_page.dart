@@ -30,7 +30,10 @@ class LoginPage extends StatelessWidget {
               .getUserByEmail(userModel.email);
           SpHelper.spHelper.setUserInfo(UserModel(
               email: userModel.email,
-              userName: signInSnapShot.docs[0][FirestoreHelper.userNameKey]));
+              userName: signInSnapShot.docs[0][FirestoreHelper.userNameKey],
+              gender: signInSnapShot.docs[0][FirestoreHelper.genderKey],
+              dateOfBirth: signInSnapShot.docs[0][FirestoreHelper.dateOfBirthKey]
+              ));
           SpHelper.spHelper.setUserLoggedInState(true);
           AppRouter.router.pushWithReplacementFunction(HomePage());
         }

@@ -9,7 +9,8 @@ class SpHelper {
   static const String userNameKey = 'USERNAME';
   static const String emailKey = 'EMAILKEY';
   static const String currentStatusKey = 'CURRENTSTATUS';
-
+  static const String genderKey = 'GENDER';
+  static const String dateOfBirthKey = 'DATEOFBIRTH';
   initSharedPrefrence() async {
     prefs = await SharedPreferences.getInstance();
   }
@@ -26,12 +27,17 @@ class SpHelper {
   setUserInfo(UserModel userModel) {
     prefs.setString(userNameKey, userModel.userName);
     prefs.setString(emailKey, userModel.email);
+    prefs.setString(genderKey , userModel.gender);
+    prefs.setString(dateOfBirthKey, userModel.dateOfBirth);
   }
 
   UserModel getUserInfo() {
     return UserModel(
         email: prefs.getString(emailKey),
-        userName: prefs.getString(userNameKey));
+        userName: prefs.getString(userNameKey),
+        gender:  prefs.getString(genderKey),
+        dateOfBirth: prefs.getString(dateOfBirthKey));
+        
   }
 
   // setUserCurrentStatus(currentStatus) {
@@ -41,8 +47,8 @@ class SpHelper {
   // getUserCurrentStatus() {
   //   return prefs.get(currentStatusKey);
   // }
-  // clear(){
-  //   prefs.clear();
-  //   print('all cleared');
-  // }
+  clear(){
+    prefs.clear();
+    print('all cleared');
+  }
 }

@@ -10,11 +10,17 @@ class AppRouter {
     }));
   }
 
-  pushNamedFunction(String routeName,[ Object argument]) {
+  pop() {
+    routerKey.currentState.pop();
+  }
+
+  pushNamedFunction(String routeName, [Object argument]) {
     routerKey.currentState.pushNamed(routeName, arguments: argument);
   }
-    pushWithReplacementFunction(Widget widget) {
-    routerKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) {
+
+  pushWithReplacementFunction(Widget widget) {
+    routerKey.currentState
+        .pushReplacement(MaterialPageRoute(builder: (context) {
       return widget;
     }));
   }
@@ -22,7 +28,8 @@ class AppRouter {
   pushNamedWithReplacementFunction(String routeName, [Object argument]) {
     routerKey.currentState.pushReplacementNamed(routeName, arguments: argument);
   }
-  back(){
-  routerKey.currentState.pop();
-}
+
+  back() {
+    routerKey.currentState.pop();
+  }
 }

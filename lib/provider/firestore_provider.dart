@@ -4,12 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class FirestoreProvider extends ChangeNotifier {
-  String currentStatus;
+  String currentStatusAsString = '';
+  double currentStatusAsDouble = 0.0;
+  String recordCategory = '';
   QuerySnapshot<Map<String, dynamic>> querySnapshot;
   initCurrentStatus() async {
     querySnapshot = await getUserRecords();
-    currentStatus =
-        querySnapshot.docs.last.data()[FirestoreHelper.currentStatusKey];
+    currentStatusAsString = querySnapshot.docs.last
+        .data()[FirestoreHelper.currentStatusAsStringKey];
+    recordCategory =
+        querySnapshot.docs.last.data()[FirestoreHelper.recordCategoryKey];
+    currentStatusAsDouble = querySnapshot.docs.last
+        .data()[FirestoreHelper.currentStatusAsDoubleKey];
     notifyListeners();
   }
 

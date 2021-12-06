@@ -3,7 +3,6 @@ import 'package:bmi_calculator_project/provider/firestore_provider.dart';
 import 'package:bmi_calculator_project/router/app_router.dart';
 import 'package:bmi_calculator_project/splash/splash_page.dart';
 import 'package:bmi_calculator_project/ui/pages/add_record_page.dart';
-import 'package:bmi_calculator_project/ui/pages/food_list_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,7 +41,7 @@ class FirebaseConfiguration extends StatelessWidget {
           );
         }
         if (snapShot.connectionState == ConnectionState.done) {
-          return AddRecordPage();
+          return SplashScreen();
         }
         return const Scaffold(
           body: Center(child: CircularProgressIndicator()),

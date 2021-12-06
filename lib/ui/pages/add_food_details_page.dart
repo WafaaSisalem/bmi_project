@@ -1,5 +1,4 @@
-import 'package:bmi_calculator_project/router/app_router.dart';
-import 'package:bmi_calculator_project/ui/pages/homepage.dart';
+
 import 'package:bmi_calculator_project/ui/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +95,7 @@ class AddFoodDetailsPage extends StatelessWidget {
                 height: 20.h,
               ),
               Container(
-                child: Center(child: Icon(Icons.camera_enhance,size: 60,color: Colors.white,),),
+                child:const Center(child: Icon(Icons.camera_enhance,size: 60,color: Colors.white,),),
                 height: 250.h,
                 color: Colors.blue,
                 width: double.infinity,

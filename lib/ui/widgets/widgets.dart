@@ -132,7 +132,7 @@ counterIncDec(itemCount, function) {
   );
 }
 
-oldStatusItemWidget() {
+oldStatusItemWidget({String date ='',String weight='',String statusAsString='',String length=''}) {
   return Container(
     height: 100.h,
     margin: EdgeInsets.symmetric(vertical: 10.h),
@@ -145,16 +145,16 @@ oldStatusItemWidget() {
         TableRow(children: [
           SizedBox(
             height: 50.h,
-            child: const Center(child: Center(child: Text('20/1/2020'))),
+            child:  Center(child: Center(child: Text(date))),
           ),
-          SizedBox(height: 50.h, child: const Center(child: Text('60 Kg')))
+          SizedBox(height: 50.h, child:  Center(child: Text(weight+' Kg')))
         ]),
         TableRow(children: [
           SizedBox(
             height: 50.h,
-            child: const Center(child: Text('Normal')),
+            child:  Center(child: Text(statusAsString)),
           ),
-          SizedBox(height: 50.h, child: const Center(child: Text('170 Cm')))
+          SizedBox(height: 50.h, child:  Center(child: Text(length+' Cm')))
         ])
       ],
     ),
@@ -169,7 +169,7 @@ foodListItem() {
         Expanded(
           flex: 1,
           child: Container(
-            child: Center(
+            child:const Center(
               child: Text('Picture'),
             ),
             decoration: BoxDecoration(
