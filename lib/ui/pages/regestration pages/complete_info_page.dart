@@ -66,7 +66,6 @@ class _CompleteInfoPageState extends State<CompleteInfoPage> {
           ///////set user info and state in shared preference
           SpHelper.spHelper.setUserInfo(userModel);
           SpHelper.spHelper.setUserLoggedInState(true);
-          // SpHelper.spHelper.setUserCurrentStatus(currentStatus);
           AppRouter.router.pushWithReplacementFunction(HomePage());
         }
       });

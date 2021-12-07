@@ -1,4 +1,7 @@
+import 'package:bmi_calculator_project/models/food_details_model.dart';
+import 'package:bmi_calculator_project/models/record_model.dart';
 import 'package:bmi_calculator_project/router/app_router.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:spinner_input/spinner_input.dart';
@@ -132,7 +135,7 @@ counterIncDec(itemCount, function) {
   );
 }
 
-oldStatusItemWidget({String date ='',String weight='',String statusAsString='',String length=''}) {
+oldStatusItemWidget({date = '', RecordModel recordModel}) {
   return Container(
     height: 100.h,
     margin: EdgeInsets.symmetric(vertical: 10.h),
@@ -145,23 +148,27 @@ oldStatusItemWidget({String date ='',String weight='',String statusAsString='',S
         TableRow(children: [
           SizedBox(
             height: 50.h,
-            child:  Center(child: Center(child: Text(date))),
+            child: Center(child: Center(child: Text(date))),
           ),
-          SizedBox(height: 50.h, child:  Center(child: Text(weight+' Kg')))
+          SizedBox(
+              height: 50.h,
+              child: Center(child: Text(recordModel.weight.toString() + ' Kg')))
         ]),
         TableRow(children: [
           SizedBox(
             height: 50.h,
-            child:  Center(child: Text(statusAsString)),
+            child: Center(child: Text(recordModel.recordCategory)),
           ),
-          SizedBox(height: 50.h, child:  Center(child: Text(length+' Cm')))
+          SizedBox(
+              height: 50.h,
+              child: Center(child: Text(recordModel.length.toString() + ' Cm')))
         ])
       ],
     ),
   );
 }
 
-foodListItem() {
+foodListItem(FoodDetailsModel foodDetailsModel, Function deleteFunction,Function editFunction) {
   return SizedBox(
     height: 80.h,
     child: Row(
@@ -169,8 +176,11 @@ foodListItem() {
         Expanded(
           flex: 1,
           child: Container(
-            child:const Center(
-              child: Text('Picture'),
+            width: double.infinity,
+            height: double.infinity,
+            child: Image.network(
+              foodDetailsModel.imageUrl,
+              fit: BoxFit.cover,
             ),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.blue),
@@ -187,22 +197,22 @@ foodListItem() {
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Expanded(
                         child: Text(
-                      'Salamon',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                      foodDetailsModel.foodName,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 18),
                     )),
                     Expanded(
-                        child: Text('Fish',
-                            style: TextStyle(
+                        child: Text(foodDetailsModel.foodCategory,
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 15,
                                 color: Colors.grey))),
                     Expanded(
-                        child: Text('22 cal/g',
-                            style: TextStyle(
+                        child: Text(foodDetailsModel.foodCalory + ' cal/g',
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 15,
                                 color: Colors.grey)))
@@ -216,25 +226,28 @@ foodListItem() {
                       padding: EdgeInsets.only(right: 10.w, top: 10.h),
                       width: 80.w,
                       height: 40.h,
-                      child: buttonWidget('Edit', () {}),
+                      child: buttonWidget('Edit',editFunction),
                     ),
-                    Container(
-                      height: 20.h,
-                      width: 30.w,
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(5),
-                          topLeft: Radius.circular(5),
-                          bottomLeft: Radius.circular(5),
+                    GestureDetector(
+                      onTap: deleteFunction,
+                      child: Container(
+                        height: 20.h,
+                        width: 30.w,
+                        decoration: const BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(5),
+                            topLeft: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
+                          ),
                         ),
+                        child: const Center(
+                            child: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 16,
+                        )),
                       ),
-                      child: const Center(
-                          child: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 16,
-                      )),
                     ),
                   ],
                 )
@@ -259,4 +272,17 @@ detailsInputDecorationWidget() {
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(0),
           borderSide: const BorderSide(color: Colors.blue)));
+}
+
+List getCategoriesList() {
+  return [
+    'Fruits',
+    'Fish',
+    'Carbohydrate',
+    'Vegetable',
+    'Dairy',
+    'Grains',
+    'Protein',
+    'Oils'
+  ];
 }

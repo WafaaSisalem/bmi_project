@@ -1,14 +1,11 @@
 import 'dart:math';
-
 import 'package:bmi_calculator_project/BMIMehtods/bmi_methods.dart';
 import 'package:bmi_calculator_project/helpers/firestore_helper.dart';
 import 'package:bmi_calculator_project/helpers/shared_preference_helper.dart';
 import 'package:bmi_calculator_project/models/record_model.dart';
-import 'package:bmi_calculator_project/models/user_model.dart';
 import 'package:bmi_calculator_project/provider/firestore_provider.dart';
 import 'package:bmi_calculator_project/router/app_router.dart';
 import 'package:bmi_calculator_project/ui/pages/homepage.dart';
-import 'package:bmi_calculator_project/ui/pages/regestration%20pages/complete_info_page.dart';
 import 'package:bmi_calculator_project/ui/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

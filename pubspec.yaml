@@ -41,6 +41,8 @@ dependencies:
   flutter_screenutil: ^5.0.0+2
   spinner_input: ^0.1.2
   provider: ^5.0.0
+  firebase_storage: ^10.2.0
+  image_picker: ^0.8.4+4
 
 dev_dependencies:
   flutter_test:

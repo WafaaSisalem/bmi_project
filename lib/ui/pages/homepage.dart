@@ -1,9 +1,8 @@
 import 'dart:async';
-
-import 'package:bmi_calculator_project/BMIMehtods/bmi_methods.dart';
 import 'package:bmi_calculator_project/helpers/firebase_auth_helper.dart';
 import 'package:bmi_calculator_project/helpers/firestore_helper.dart';
 import 'package:bmi_calculator_project/helpers/shared_preference_helper.dart';
+import 'package:bmi_calculator_project/models/record_model.dart';
 import 'package:bmi_calculator_project/provider/firestore_provider.dart';
 import 'package:bmi_calculator_project/router/app_router.dart';
 import 'package:bmi_calculator_project/ui/pages/add_food_details_page.dart';
@@ -11,7 +10,6 @@ import 'package:bmi_calculator_project/ui/pages/add_record_page.dart';
 import 'package:bmi_calculator_project/ui/pages/food_list_page.dart';
 import 'package:bmi_calculator_project/ui/pages/regestration%20pages/signin_page.dart';
 import 'package:bmi_calculator_project/ui/widgets/widgets.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     Provider.of<FirestoreProvider>(context, listen: false).initCurrentStatus();
   }
 
-  final _controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Consumer<FirestoreProvider>(
@@ -80,9 +77,11 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(5.r)),
                     child: Center(
-                        child: firestoreProvider.querySnapshot == null
+                        child: firestoreProvider.queryRecordSnapshot == null
                             ? const Center(child: CircularProgressIndicator())
-                            : firestoreProvider.querySnapshot.docs.length < 2
+                            : firestoreProvider
+                                        .queryRecordSnapshot.docs.length <
+                                    2
                                 ? Text(
                                     firestoreProvider.recordCategory,
                                     style: TextStyle(
@@ -113,9 +112,10 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(5.r)),
-                      child: firestoreProvider.querySnapshot == null
+                      child: firestoreProvider.queryRecordSnapshot == null
                           ? const Center(child: CircularProgressIndicator())
-                          : firestoreProvider.querySnapshot.docs.length < 2
+                          : firestoreProvider.queryRecordSnapshot.docs.length <
+                                  2
                               ? const Center(
                                   child: Text(
                                   'There is no old status yet!',
@@ -123,34 +123,20 @@ class _HomePageState extends State<HomePage> {
                                       color: Colors.white, fontSize: 20),
                                 ))
                               : ListView.builder(
-                                  reverse: true,
-                                  controller: _controller,
                                   itemBuilder: (context, index) {
-                                    Timer(
-                                    const  Duration(seconds: 1),
-                                      () => _controller.jumpTo(
-                                          _controller.position.maxScrollExtent),
-                                    );
                                     Map<String, dynamic> records =
                                         firestoreProvider
-                                            .querySnapshot.docs[index]
+                                            .queryRecordSnapshot.docs[index]
                                             .data();
+
                                     return oldStatusItemWidget(
                                         date: records[
-                                                FirestoreHelper.dateFormatedKey]
-                                            .toString(),
-                                        weight:
-                                            records[FirestoreHelper.weightKey]
-                                                .toString(),
-                                        statusAsString: records[FirestoreHelper
-                                                .recordCategoryKey]
-                                            .toString(),
-                                        length:
-                                            records[FirestoreHelper.lengthKey]
-                                                .toString());
+                                            FirestoreHelper.dateFormatedKey],
+                                        recordModel:
+                                            RecordModel.fromMap(records));
                                   },
                                   itemCount: firestoreProvider
-                                          .querySnapshot.docs.length -
+                                          .queryRecordSnapshot.docs.length -
                                       1,
                                 )),
                   SizedBox(

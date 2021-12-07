@@ -40,15 +40,7 @@ class SpHelper {
         
   }
 
-  // setUserCurrentStatus(currentStatus) {
-  //   prefs.setString(currentStatusKey, currentStatus);
-  // }
-
-  // getUserCurrentStatus() {
-  //   return prefs.get(currentStatusKey);
-  // }
   clear(){
     prefs.clear();
-    print('all cleared');
   }
 }
