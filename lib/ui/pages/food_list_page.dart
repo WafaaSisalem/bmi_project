@@ -52,10 +52,10 @@ class _FoodListPageState extends State<FoodListPage> {
                         },
                         itemBuilder: (context, index) {
                           Map<String, dynamic> foods = firestoreProvider
-                              .queryFoodSnapshot.docs[index]
+                              .queryFoodSnapshot.docs.reversed.toList()[index]
                               .data();
                           dynamic docId = firestoreProvider
-                              .queryFoodSnapshot.docs[index].id;
+                              .queryFoodSnapshot.docs.reversed.toList()[index].id;
 
                           return foodListItem(FoodDetailsModel.fromMap(foods),
                               () {

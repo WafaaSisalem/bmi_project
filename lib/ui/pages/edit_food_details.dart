@@ -37,7 +37,7 @@ class _EditFoodDetailsState extends State<EditFoodDetails> {
         foodDetailsModel, SpHelper.spHelper.getUserInfo().email);
     Provider.of<FirestoreProvider>(context, listen: false)
         .deleteFoodFromFoodList(widget.docId);
-    AppRouter.router.pop();
+    AppRouter.router.pop();  
   }
 
   @override
@@ -165,10 +165,10 @@ class _EditFoodDetailsState extends State<EditFoodDetails> {
                 ),
                 Container(
                   child: uploadPhotoClicked
-                      ? Image.file(
+                      ?  firestoreProvider.file!=null?Image.file(
                           firestoreProvider.file,
                           fit: BoxFit.cover,
-                        )
+                        ):const SizedBox()
                       : Image.network(
                           imageUrl,
                           fit: BoxFit.cover,
@@ -194,11 +194,13 @@ class _EditFoodDetailsState extends State<EditFoodDetails> {
                     ),
                     Expanded(
                       child: buttonWidget('Save', () async {
+                        
                         if (firestoreProvider.file != null) {
                           imageUrl = await FirestorageHelper.firestorageHelper
                               .uploadImage(firestoreProvider.file);
                         }
                         firestoreProvider.file = null;
+                      
                         save();
                       }),
                       flex: 1,

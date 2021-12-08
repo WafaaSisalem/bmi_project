@@ -10,7 +10,7 @@ class FirestoreProvider extends ChangeNotifier {
   String currentStatusAsString = '';
   double currentStatusAsDouble = 0.0;
   String recordCategory = '';
-  File file;
+  File file; 
   QuerySnapshot<Map<String, dynamic>> queryRecordSnapshot;
   QuerySnapshot<Map<String, dynamic>> queryFoodSnapshot;
 
