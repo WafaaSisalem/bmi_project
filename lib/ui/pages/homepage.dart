@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                                     Map<String, dynamic> records =
                                         firestoreProvider
                                             .queryRecordSnapshot.docs.reversed
-                                            .toList()[index]
+                                            .toList()[index+1]
                                             .data();
 
                                     return oldStatusItemWidget(
