@@ -30,7 +30,7 @@ class _AddFoodDetailsPageState extends State<AddFoodDetailsPage> {
     );
     await FirestoreHelper.firestoreHelper.addFoodToFoodListToTheUser(
         foodDetailsModel, SpHelper.spHelper.getUserInfo().email);
-        AppRouter.router.pop();
+    AppRouter.router.pop();
   }
 
   @override
@@ -175,12 +175,10 @@ class _AddFoodDetailsPageState extends State<AddFoodDetailsPage> {
                       width: 20.w,
                     ),
                     Expanded(
-                      
                       child: buttonWidget('Save', () async {
-                        
                         imageUrl = await FirestorageHelper.firestorageHelper
                             .uploadImage(firestoreProvider.file);
-                            firestoreProvider.file =null;
+                        firestoreProvider.file = null;
                         save();
                       }),
                       flex: 1,
